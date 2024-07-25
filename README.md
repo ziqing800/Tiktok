@@ -1,5 +1,4 @@
 # Tiktok Data Analysis project 
-Predicting user's verification status
 This project is part of the data project practices of the Google Advanced Data Analytics course 
 
 ## Overview
