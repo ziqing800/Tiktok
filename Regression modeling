@@ -44,4 +44,4 @@ data_upsampled["length_text"]=data_upsampled["video_transcription_text"].apply(f
 sns.histplot(data=data_upsampled, x="length_text", hue="verified_status", multiple='stack')
 plt.title("Distribution of text length for videos posted by verified accounts and videos posted by unverified accounts") 
                                                                                                                                                             
-                                                                                                                                                            
+<img width="946" alt="Distribution of text length for videos posted by verified accounts and videos posted by unverified accounts" src="https://github.com/user-attachments/assets/ecb9874e-236c-4272-a154-d6aab5051019">                                                                                                                                                            
