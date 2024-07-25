@@ -1,0 +1,47 @@
+# Import packages for data preprocessing
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.utils import resample
+
+# Import packages for data modeling
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
+# Check class balance 
+data["verified_status"].value_counts(normalize=True)
+
+# Approximately 93.6% of the dataset represents videos posted by unverified accounts and 6.4% represents videos posted by verified accounts. 
+# So the outcome variable is not very balanced.
+
+# Use resampling to create class balance in the outcome variable
+
+# Identify data points from majority and minority classes
+data_majority = data[data["verified_status"] == "not verified"]
+data_minority = data[data["verified_status"] == "verified"]
+
+# Upsample the minority class (which is "verified")
+data_minority_upsampled = resample(data_minority,
+                                 replace=True,                 # to sample with replacement
+                                 n_samples=len(data_majority), # to match majority class
+                                 random_state=0)               # to create reproducible results
+
+# Combine majority class with upsampled minority class
+data_upsampled = pd.concat([data_majority, data_minority_upsampled]).reset_index(drop=True)
+
+# Display new class counts
+data_upsampled["verified_status"].value_counts()
+
+# Get the average `video_transcription_text` length for verified and the average `video_transcription_text` length for unverified
+data_upsampled[["verified_status", "video_transcription_text"]].groupby(by="verified_status")[["video_transcription_text"]].agg(func=lambda array: np.mean([len(text) for text in array]))
+                                                                                                                                                            
+# Extract the length of each `video_transcription_text` and add this as a column to the dataframe
+data_upsampled["length_text"]=data_upsampled["video_transcription_text"].apply(func=lambda text: len(text))
+                                                                                                                                                            
+# Visualize the distribution of `video_transcription_text` length for videos posted by verified accounts and videos posted by unverified accounts
+# Create two histograms in one plot
+sns.histplot(data=data_upsampled, x="length_text", hue="verified_status", multiple='stack')
+plt.title("Distribution of text length for videos posted by verified accounts and videos posted by unverified accounts") 
+                                                                                                                                                            
+                                                                                                                                                            
