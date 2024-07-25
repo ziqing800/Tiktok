@@ -1,5 +1,5 @@
 # Tiktok Data Analysis project 
-This project is part of the data project practices of the Google Advanced Data Analytics course 
+This project is part of the data project practices of Google Advanced Data Analytics course 
 
 ## Overview
 This project aims to build a logistic regression to predict the user's verification status. This project utilized the dataset provided by Tiktok companies and the dataset is used to identify variables associated with the user's verification status and understand how video characteristics relate to whether a user is verified. The final logistic model performed with a precision score of 61%, a recall score of 85%, and an accuracy of 66% in determining which features were most important in determining the user's verification status. 
