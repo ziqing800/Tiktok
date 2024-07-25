@@ -1,0 +1,41 @@
+# Import packages for data manipulation
+import pandas as pd 
+import numpy as np 
+
+# Import packages for data visualization
+import matplotlib.pyplot as plt
+import seaborn as sns 
+
+
+# Import packages for statistical analysis/hypothesis testing
+from scipy import stats
+
+# Load dataset into dataframe
+data = pd.read_csv("tiktok_dataset.csv")
+
+# Explore data 
+# Check for missing values
+data.isna().sum()
+
+# Drop rows with missing values
+data=data.dropna(axis=0)
+
+# Explore the relationship between verified_status and video_view_count
+# Examine the mean value of video_view_count for each group of verified_status in the sample data.
+# Compute the mean `video_view_count` for each group in `verified_status`
+data.groupby("verified_status")['video_view_count'].mean()
+
+# Conduct a two-sample t-test
+# State the null hypothesis and alternate hypothesis
+# Null hypothesis: There is no difference in the mean number of views between TikTok videos posted by verified accounts and TikTok videos posted by unverified accounts (any observed difference in the sample data is due to chance or sampling variability).
+# Alternate hypothesis: There is a difference in the mean number of views between TikTok videos posted by verified accounts and TikTok videos posted by unverified accounts (any observed difference in the sample data is due to an actual difference in the corresponding population means).
+# Choose 5% as the significance level
+
+# Conduct a two-sample t-test to compare means
+significance_level=0.05
+not_verified=data[data["verified_status"]=='not verified']['video_view_count']
+verified=data[data["verified_status"]=='verified']['video_view_count']
+stats.ttest_ind(not_verified,verified,equal_var=False)
+
+# Since the p-value is extremely small (much smaller than the significance level of 5%), reject the null hypothesis. 
+# Conclusion: There is a statistically significant difference in the mean video view count between verified and unverified accounts on TikTok.
